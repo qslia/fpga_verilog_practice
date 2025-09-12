@@ -75,17 +75,17 @@ module loop_examples (
   // 4. FOR LOOP
   // Statements are executed for a certain number of times
   // Example: Add 5 to sum 5 times
-  integer k;
-  always @(posedge clk or posedge reset) begin
-    if (reset) begin
-      sum = 0;
-    end else begin
-      sum = 0;
-      for (k = 0; k < 5; k = k + 1) begin
-        sum = sum + 5;
-      end
-    end
-  end
+  // integer k;
+  // always @(posedge clk or posedge reset) begin
+  //   if (reset) begin
+  //     sum = 0;
+  //   end else begin
+  //     sum = 0;
+  //     for (k = 0; k < 5; k = k + 1) begin
+  //       sum = sum + 5;
+  //     end
+  //   end
+  // end
 
   // More complex for loop example
   reg [7:0] array_sum;
@@ -111,6 +111,8 @@ module loop_examples (
   reg [15:0] matrix_sum;
   integer row, col;
   always @(posedge clk) begin
+  
+  
     if (reset) begin
       matrix_sum = 0;
     end else begin

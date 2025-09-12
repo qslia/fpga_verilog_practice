@@ -82,5 +82,33 @@ always begin
 end
 
 
+module mux_bh (
+    input  a,
+    b,
+    s,
+    output y
+);
+  reg y;
+  always @(s or a or b) begin
+    if (s == 0) y = a;
+    else y = b;
+  end
+endmodule
+
+
+module mux_bh1 (
+    input  a,
+    b,
+    s,
+    output y
+);
+  reg y;
+  always @(*) begin
+    if (s == 0) y = a;
+    else y = b;
+  end
+endmodule
+
+
 
 
