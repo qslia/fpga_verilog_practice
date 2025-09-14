@@ -110,5 +110,168 @@ module mux_bh1 (
 endmodule
 
 
+module mux_case (
+    input  a,
+    b,
+    s,
+    output y
+);
+  reg y;
+  always @(s or a or b) begin
+    case (s)
+      0: y = a;
+      1: y = b;
+    endcase
+  end
+endmodule
+
+
+// Blocking Procedural Statement Example
+initial begin
+  x = #5 1'b1;  // Wait 5 time units, then assign 1 to x
+  x = #6 1'b0;  // Wait 6 more time units, then assign 0 to x
+  x = #7 1'b1;  // Wait 7 more time units, then assign 1 to x
+end
+
+// Non-Blocking Procedural Statement Example
+initial begin
+  x <= #5 1'b1;  // Schedule assignment of 1 to x after 5 time units
+  x <= #6 1'b0;  // Schedule assignment of 0 to x after 6 time units
+  x <= #7 1'b1;  // Schedule assignment of 1 to x after 7 time units
+end
+
+
+module mac (
+    input clk,
+    input [3:0] a,
+    b,
+    c,
+    output reg [3:0] s
+);
+  reg [3:0] d;
+  always @(posedge clk) begin
+    d <= a + b;
+    s <= c + d;
+  end
+endmodule
+
+
+module mac (
+    input clk,
+    input [3:0] a,
+    b,
+    c,
+    output reg [3:0] s
+);
+  reg [3:0] d;
+  always @(posedge clk) begin
+    d = a + b;
+    s = c + d;
+  end
+endmodule
+
+
+module mux_gl (
+    input  a,
+    b,
+    s,
+    output y
+);
+  wire q1, q2, sbar;
+  not n1 (sbar, s);
+  and a1 (q1, sbar, a);
+  and a2 (q2, s, b);
+  or o1 (y, q1, q2);
+endmodule
+
+
+module mux_4_1 (
+    input a1,
+    a2,
+    a3,
+    a4,
+    input [1:0] s,
+    output y
+);
+  wire t1, t2;
+  mux_df m1 (
+      a1,
+      a2,
+      s[0],
+      t1
+  );
+  mux_df m2 (
+      a3,
+      a4,
+      s[0],
+      t2
+  );
+  mux_df m3 (
+      t1,
+      t2,
+      s[1],
+      y
+  );
+endmodule
+
+
+module mux_4_1 (
+    input a1,
+    a2,
+    a3,
+    a4,
+    input [1:0] s,
+    output y
+);
+  wire t1, t2;
+  mux_df m1 (
+      .a(a1),
+      .b(a2),
+      .s(s[0]),
+      .y(t1)
+  );
+  mux_df m2 (
+      .a(a3),
+      .b(a4),
+      .s(s[0]),
+      .y(t2)
+  );
+  mux_df m3 (
+      .a(t1),
+      .b(t2),
+      .s(s[1]),
+      .y(y)
+  );
+endmodule
+
+
+module mux_4_1_mix (
+    input a1,
+    a2,
+    a3,
+    a4,
+    input [1:0] s,
+    output y
+);
+  reg y;
+  wire t1, t2;
+  mux_df m1 (
+      a1,
+      a2,
+      s[0],
+      t1
+  );
+  mux_gl m2 (
+      a3,
+      a4,
+      s[0],
+      t2
+  );
+  always @(s[1] or t1 or t2) begin
+    if (s[1] == 0) y = t1;
+    else y = t2;
+  end
+endmodule
+
 
 
