@@ -80,3 +80,4 @@ In this example, `@(negedge en)` would trigger at times 4 and 8.
 
 ---
 *Generated on: Friday, September 19, 2025*
+
